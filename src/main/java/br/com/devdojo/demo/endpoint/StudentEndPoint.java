@@ -57,8 +57,8 @@ public class StudentEndPoint {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void verifyIfStudentExists(Long id) {
+ private void verifyIfStudentExists(Long id){
         if (studentDAO.findById(id) == null)
-            throw new ResourceNotFoundException("Student not found for ID: " + id);
+            throw new ResourceNotFoundException("Student not found for ID: "+id);
     }
 }
