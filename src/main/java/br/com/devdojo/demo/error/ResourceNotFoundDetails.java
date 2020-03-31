@@ -8,7 +8,8 @@ public class ResourceNotFoundDetails {
     private long timestamp;
     private String developerMessage;
 
-    private ResourceNotFoundDetails(String tittle) {
+    public ResourceNotFoundDetails(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
@@ -45,8 +46,8 @@ public class ResourceNotFoundDetails {
             return new Builder();
         }
 
-        public Builder title(String tittle) {
-            this.title = tittle;
+        public Builder title(String title) {
+            this.title = title;
             return this;
         }
 

@@ -39,7 +39,7 @@ public class StudentEndPoint {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Student student) {
+    public ResponseEntity<?> save(@RequestParam Student student) {
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
     }
 
@@ -51,14 +51,14 @@ public class StudentEndPoint {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody Student student) {
+    public ResponseEntity<?> update(@RequestParam Student student) {
         verifyIfStudentExists(student.getId());
         studentDAO.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
  private void verifyIfStudentExists(Long id){
-        if (studentDAO.findById(id) == null)
+        if (!studentDAO.findById(id).isPresent())
             throw new ResourceNotFoundException("Student not found for ID: "+id);
     }
 }
