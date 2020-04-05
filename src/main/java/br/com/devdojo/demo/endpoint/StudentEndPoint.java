@@ -6,6 +6,7 @@ import br.com.devdojo.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class StudentEndPoint {
 
     private final StudentRepository studentDAO;
+    private Student student;
 
     @Autowired
     public StudentEndPoint(StudentRepository studentDAO) {
@@ -39,7 +41,8 @@ public class StudentEndPoint {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestParam Student student) {
+    @Transactional
+    public ResponseEntity<?> save(@RequestBody Student student) {
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
     }
 
@@ -52,6 +55,7 @@ public class StudentEndPoint {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestParam Student student) {
+        this.student = student;
         verifyIfStudentExists(student.getId());
         studentDAO.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
