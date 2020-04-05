@@ -50,19 +50,18 @@ public class StudentEndPoint {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         verifyIfStudentExists(id);
         studentDAO.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Student " + id + " deleted", HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestParam Student student) {
-        this.student = student;
+    public ResponseEntity<?> update(@RequestBody Student student) {
         verifyIfStudentExists(student.getId());
         studentDAO.save(student);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Update student OK", HttpStatus.OK);
     }
 
- private void verifyIfStudentExists(Long id){
+    private void verifyIfStudentExists(Long id) {
         if (!studentDAO.findById(id).isPresent())
-            throw new ResourceNotFoundException("Student not found for ID: "+id);
+            throw new ResourceNotFoundException("Student not found for ID: " + id);
     }
 }
